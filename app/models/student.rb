@@ -31,7 +31,6 @@ class Student
     def grade_percentage
         passing_tests = self.tests.count {|test| test.status == "passed"}
         total_tests = self.tests.count
-        binding.pry
         passing_tests/total_tests.to_f*100
     end
 end
