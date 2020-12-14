@@ -27,15 +27,16 @@ class Instructor
         graded_test.status = "passed"
     end
 
-    def fail_student(student_obj, test_to_grade)
-        graded_test = find_by_student_and_test_name(student_obj, test_to_grade)
-        graded_test ||= BoatingTest.new(student_obj, test_to_grade, self, "failed")
+    def fail_student(student_obj, name_of_test)
+        test_to_grade = find_by_student_and_test_name(student_obj, name_of_test)
+        test_to_grade ||= BoatingTest.new(student_obj, test_to_grade, self, "failed")
+        test_to_grade.status = "failed"
     end
 
     private
 
-    def find_by_student_and_test_name (student_obj, test_to_grade)
-        self.tests.find{|test| test.student == student_obj && test.test_name == test_to_grade}
+    def find_by_student_and_test_name (student_obj, name_of_test)
+        self.tests.find{|test| test.student == student_obj && test.test_name == name_of_test}
     end
 
     
