@@ -23,11 +23,15 @@ class Instructor
     end
 
     def pass_student(student_obj, name_of_test)
-        find_test_or_create_by_name(student_obj, name_of_test).status = "passed"
+        test_obj = find_test_or_create_by_name(student_obj, name_of_test)
+        test_obj.status = "passed"
+        test_obj
     end
 
     def fail_student(student_obj, name_of_test)
-        find_test_or_create_by_name(student_obj, name_of_test).status = "failed"
+        test_obj = find_test_or_create_by_name(student_obj, name_of_test)
+        test_obj.status = "failed"
+        test_obj
     end
 
     private
