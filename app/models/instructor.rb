@@ -22,15 +22,12 @@ class Instructor
         self.passed_tests.map(&:student).uniq
     end
 
-    def pass_student(student_obj, test_to_grade)
-        graded_test = find_by_student_and_test_name(student_obj, test_to_grade)
-        graded_test.status = "passed"
+    def pass_student(student_obj, name_of_test)
+        find_test_or_create_by_name(student_obj, name_of_test).status = "passed"
     end
 
     def fail_student(student_obj, name_of_test)
-        test_to_grade = find_by_student_and_test_name(student_obj, name_of_test)
-        test_to_grade ||= BoatingTest.new(student_obj, test_to_grade, self, "failed")
-        test_to_grade.status = "failed"
+        find_test_or_create_by_name(student_obj, name_of_test).status = "failed"
     end
 
     private
@@ -38,6 +35,13 @@ class Instructor
     def find_by_student_and_test_name (student_obj, name_of_test)
         self.tests.find{|test| test.student == student_obj && test.test_name == name_of_test}
     end
+
+    def find_test_or_create_by_name(student_obj, name_of_test)
+        test_to_grade = find_by_student_and_test_name(student_obj, name_of_test)
+        test_to_grade ||= BoatingTest.new(student_obj, name_of_test, self)
+        test_to_grade
+    end
+
 
     
 end
